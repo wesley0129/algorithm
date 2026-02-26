@@ -1,0 +1,76 @@
+#include <iostream>
+#include <vector>
+#define MAX_LIST_SIZE 100
+using namespace std;
+
+class List{
+    public:
+    List() : Length(0), size(MAX_LIST_SIZE) {};
+    private:
+    bool is_full() const {
+        return Length >= MAX_LIST_SIZE;
+    };
+    bool is_empty() const {
+        return Length == 0;
+    }
+    int* data = new int[MAX_LIST_SIZE];
+    int Length;
+    int size;
+    void insert(int pos = -1, const int it){
+        if(!is_full() && !is_empty()){
+            if(pos >= 0 && pos < Length){
+                for(int i = Length-1; i == pos; i--){
+                    if(i < MAX_LIST_SIZE - 1){
+                        data[i + 1] = data[i];    
+                    }    
+                }
+                Length++;
+                data[pos] = it;
+            }
+            if( pos >= Length){
+                data[Length] = it;
+                Length++;
+            }
+            if( pos == -1 ){
+                data[Length] = it;
+                Length++;
+            }
+        }
+        if(is_full()){
+            resize();
+        }
+    };
+
+    void insert_first(const int it){
+        if(!is_full() && !is_empty()){
+            for(int i = Length - 1; i == 0; i--){
+                if(i < MAX_LIST_SIZE - 1){
+                    data[i + 1] = data[i];    
+                }  
+            }
+            Length++;
+            data[0] = it;
+        }
+    };
+
+    void resize() {
+        size *= 2;
+        int* new_data = new int[size];
+        for(int i = 0; i < Length; i++) {
+            new_data[i] = data[i];
+        }
+        delete[] data;
+        data = new_data;
+    }
+    
+    void delete_pos(){};
+    void clear(){};
+    void get_entry(){};
+    void get_length(){};
+    void print_list(){};
+};
+
+int main() {
+
+return 0;
+}
