@@ -29,30 +29,35 @@ public:
     }
     void pop_front()
     {
-        if (size() == 0)
+        if (front_ - rear_ == 0)
         {
             cout << -1 << "\n";
         }
-        cout << arr[front_] << "\n";
-        front_++;
+        else
+        {
+            cout << arr[front_] << "\n";
+            front_++;
+        }
     }
     void pop_back()
     {
-        if (size() == 0)
+        if (front_ - rear_ == 0)
         {
             cout << -1 << "\n";
         }
-        rear_--;
-        cout << arr[rear_] << "\n";
+        else
+        {
+            rear_--;
+            cout << arr[rear_] << "\n";
+        }
     }
-    int size()
+    void size()
     {
-        cout << front_ - rear_ << "\n";
-        return (front_ - rear_);
+        cout << rear_ - front_ << "\n";
     }
     void empty()
     {
-        if (size() == 0)
+        if (front_ - rear_ == 0)
         {
             cout << 1 << "\n";
         }
@@ -63,11 +68,25 @@ public:
     }
     void front()
     {
-        cout << arr[front_] << "\n";
+        if (front_ - rear_ == 0)
+        {
+            cout << -1 << "\n";
+        }
+        else
+        {
+            cout << arr[front_] << "\n";
+        }
     }
     void back()
     {
-        cout << arr[rear_ - 1] << "\n";
+        if (front_ - rear_ == 0)
+        {
+            cout << -1 << "\n";
+        }
+        else
+        {
+            cout << arr[rear_ - 1] << "\n";
+        }
     }
 };
 int main()
