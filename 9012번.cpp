@@ -1,8 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <unordered_map>
-#include <algorithm>
-#include <unordered_set>
 #include <cmath>
 #include <stack>
 using namespace std;
@@ -10,18 +7,13 @@ using namespace std;
 bool check(string tmp){
     stack<char> ps;
     for(auto i:tmp){
-        if(ps.top() == '(' && i==')'){
+        if(!ps.empty() && ps.top() == '(' && i==')'){
             ps.pop();
         }else{
             ps.push(i);
         }
     }
-    if(ps.empty()){
-        return true;
-    }
-    else{
-        return false;
-    }
+    return ps.empty();
 }
 
 int main(){
@@ -40,4 +32,8 @@ int main(){
             ans.push_back("NO");
         }
     }
+    for(auto a: ans){
+        cout<<a<<"\n";
+    }
+    return 0;
 }
