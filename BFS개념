@@ -1,0 +1,81 @@
+너비 우선 탐색(BFS, Breadth - First Search)
+
+    > -개념
+    > -특징
+    > -구현
+          - 그래프 탐색
+          - 하나의 노드에서 시작해서 모든 노드를 한번씩 거치는 것
+          - 컴퓨터 네트워크에서 사용됨.
+
+          - 너비 우선 탐색(BFS) - 개념
+          - 임의의 노드에서 시작해서 인접한 노드를 먼저 탐색 방문하고,
+    멀리 떨어져 있는 지점을 나중에 방문함.- 두 노드 사이의 최단 경로를 찾거나 임의의 경로를 찾기 위해 사용된다.- 특징
+        - BFS는 재귀적으로 동작하지 않는다.- BFS는 가장 가까운 노드를 먼저 탐색하고 방문한 뒤 계속 큐에 인접 노드를 삽입하는 방식
+        - 그래프 탐색에서 가장 중요한 것은 visited로 queue에 인접 노드를 삽입하고 방문한 노드를 빼는 형태로 탐색하기 때문에 방문한 노드의 visited를 저장하지 않을 경우 이미 탐색된 노드를 다시 queue에 넣는 문제가 발생할 수 있다.
+
+        - 구현
+        - 구성
+        - 2차원 배열(array, vector 등등 사용) - vector<vector<int>> : 바깥 배열은 그래프의 각 노드들을 의미,
+    안의 배열은 각 노드와 연결된 다른 노드를 표시하기 위해서 사용함.- Queue(stl queue 사용) - Queue : 임의의 노드에서 시작할때, 임의의 노드와 인접한 노드를 모두 queue에 넣고, 다음 인접한 노드로 가서 해당 노드와 인접한 노드를 queue에 넣으면서 반복 하여 연결된 하나의 그래프를 얻기 위해서 필요 - bool visited[] - visited[] : 방문한 노드에 대해서 true로 체크를 해서 이미 방문해서 인접노드를 queue에 삽입한 경우에 재삽입을 막기 위해서 사용됨.
+
+res bfs(vector<vector<int>> &g, int n, int m)
+{
+    vector<vector<bool>> visited(n, vector<bool>(m, false));
+    int max = 0;
+    int cnt = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (!visited[i][j] && g[i][j] == 1)
+            {
+                int ext = 0;
+                queue<pair<int, int>> q;
+
+                visited[i][j] = true;
+                q.push({i, j});
+
+                while (!q.empty())
+                {
+                    auto [a, b] = q.front();
+                    q.pop();
+
+                    ext++;
+
+                    if (b != m - 1 && !visited[a][b + 1] && g[a][b + 1] == 1)
+                    {
+                        visited[a][b + 1] = true;
+                        q.push({a, b + 1});
+                    }
+                    if (a != n - 1 && !visited[a + 1][b] && g[a + 1][b] == 1)
+                    {
+                        visited[a + 1][b] = true;
+                        q.push({a + 1, b});
+                    }
+                    if (a != 0 && !visited[a - 1][b] && g[a - 1][b] == 1)
+                    {
+                        visited[a - 1][b] = true;
+                        q.push({a - 1, b});
+                    }
+                    if (b != 0 && !visited[a][b - 1] && g[a][b - 1] == 1)
+                    {
+                        visited[a][b - 1] = true;
+                        q.push({a, b - 1});
+                    }
+                }
+
+                if (ext > max)
+                {
+                    max = ext;
+                }
+                cnt++;
+            }
+            else
+            {
+                continue;
+            }
+        }
+    }
+    res a = {cnt, max};
+    return a;
+};
