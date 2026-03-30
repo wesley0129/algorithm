@@ -42,6 +42,9 @@ int main(){
     return 0;
 }   
 
+
+//성능적으로 vector를 쓰는게 좋음.
+//추가적으로 미미하지만 아래쪽이나 오른쪽부터 queue에 넣으면 성능 향상.(휴리스틱)
 #include <iostream>
 #include <vector>
 #include <queue>
