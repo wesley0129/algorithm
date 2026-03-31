@@ -1,0 +1,36 @@
+#include <iostream>
+//구조적 바인딩
+std::pair<int,int> p = {1, 2};
+auto [a,b] = p;
+
+//복사하지 않고, 참조를 이용한 구조적 바인딩
+
+// std::pair<int,int> q = {11, 2};
+// auto& [c,d] = q;
+// c = 1;
+// 전역에서는 사용이 불가능하고 지역에서 사용 가능한 문임.
+
+//실제 변환 방식
+//auto& __tmp = q;
+//auto& __c = __tmp.first;
+//auto& __d = __tmp.second;
+
+//위의 변수는 숨겨진 임시 객체를 생성(q 같은 경우가 rvalue로 임시 객체이다.)하는 것이다.
+//전역에서 사용할 경우 아래의 data segment에 저장되는데
+
+// [ 코드 영역 ]
+// [ 정적 영역 (Data / BSS) ]  ← 전역 변수, static 변수
+// [ 힙 (Heap) ]              ← new, malloc
+// [ 스택 (Stack) ]           ← 지역 변수
+
+// // file1.cpp
+// std::pair<int,int> p = {1,2};
+
+// // file2.cpp
+// extern std::pair<int,int> p;
+// auto [a, b] = p;  // ❌ (가정상 가능하다고 치면)
+
+//Static Initialization Order Fiasco 어떤 파일이 먼저 실행되어서 초기화 될지 확신할 수 없음.
+//여기서 구조적 바인딩이 되어버리면 아직 초기화 되지 않은 값을 참조할 수 있다.
+//따라서 지역 스코프안에서만 사용가능하다.
+//지역 스코프에서는 실행순서가 명확하기 때문에 지역에서만 사용이 가능하다.
