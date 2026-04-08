@@ -38,7 +38,7 @@ int bfs(vector<vector<vector<int>>> box, int m, int n, int h){
                 }    
             }else{
                 int _z = _h+z[i-4];
-                if(_z>=1 && _z<h && box[_z][_n][_m]==0){
+                if(_z>=0 && _z<h && box[_z][_n][_m]==0){
                     q.push({_z,_n,_m});
                     box[_z][_n][_m] = day+1;
                 }
@@ -56,14 +56,14 @@ int bfs(vector<vector<vector<int>>> box, int m, int n, int h){
     }
     
     return max-1;
-}   
-
+}
+//1억번 연산하면 대략 1초걸림.
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     int m, n, h, cnt_0=0, cnt_1=0;
     cin>>m>>n>>h;
-    vector<vector<vector<int>>> box(h, vector<vector<int>>(m, vector<int>(n)));
+    vector<vector<vector<int>>> box(h, vector<vector<int>>(n, vector<int>(m)));
     for(int i=0;i<h;i++){
         for(int j=0;j<n;j++){
             for(int k=0;k<m;k++){
@@ -81,10 +81,11 @@ int main() {
     }
     if(cnt_0==0 && cnt_1>=1){
         cout<<0<<"\n";
+        return 0;
     }
     int res = bfs(box, m, n, h);
 
     cout<<res<<"\n";
-    
+
     return 0;
 }
